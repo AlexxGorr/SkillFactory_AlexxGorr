@@ -1,0 +1,42 @@
+[
+  {
+    "login": "admin",
+    "password": "123",
+    "site": "ya.ru"
+  },
+  {
+    "login": "admin",
+    "password": "123",
+    "site": "google.com"
+  },
+  {
+    "login": "admin",
+    "password": "123",
+    "site": "habr.ru"
+  },
+  {
+    "login": "admin",
+    "password": "qwer",
+    "site": "habr.ru"
+  },
+  {
+    "login": "admin123",
+    "password": "qwerty",
+    "site": "ya.ru"
+  },
+  {
+    "login": "admin",
+    "password": "dT0M?Mmi67q3",
+    "site": "ya.ru"
+  },
+  {
+    "login": "admin1",
+    "password": "12345",
+    "site": "codwars.com"
+  },
+  {
+    "login": "admin",
+    "password": "idokine838",
+    "site": "habr.ru"
+  }
+]

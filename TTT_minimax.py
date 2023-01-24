@@ -1,3 +1,6 @@
+# http://ptsj.ru/articles/482/482.pdf
+# https://github.com/maulerant/learn_python/blob/master/tasks_for_beginners/tic_tac_toe.py
+
 from copy import deepcopy
 from random import randint
 import time

@@ -41,14 +41,14 @@ class Game(Board):
     turn = randint(1, 5)
     Board.turn_id = turn
     token = 'XO'
-    win_situation = ((0, 1, 2,),
-                     (3, 4, 5,),
-                     (6, 7, 8,),
-                     (0, 3, 6,),
-                     (1, 4, 7,),
-                     (2, 5, 8,),
-                     (0, 4, 8,),
-                     (2, 4, 6,),)
+    win_situation = ((0, 1, 2),
+                     (3, 4, 5),
+                     (6, 7, 8),
+                     (0, 3, 6),
+                     (1, 4, 7),
+                     (2, 5, 8),
+                     (0, 4, 8),
+                     (2, 4, 6))
 
     def winner(self, token_var, field):
         game = Game()

@@ -1,0 +1,192 @@
+Общие настройки
+
+0. Создание проекта:
+	в директории проекта создаем виртуальное окружение - 
+		python -m venv venv
+	активируем виртуальное окружение (заходим внутрь venv) - 
+		source venv/bin/activate
+	устанавливаем Джанго фрэймворк - 
+		pip install django
+	создание проекта -
+		django-admin startproject projectname
+	создание базы данных sqlite (первый старт сервера) - 
+		python manage.py runserver
+		
+1. Создаем администратора:
+	python manage.py createsuperuser 
+	(http://127.0.0.1:8000/admin)
+
+2. (setting.py) Добавление приложений в INSTALLED_APPS для работы со статическими страницами:
+	'django.contrib.sites',
+	'django.contrib.flatpages',
+
+	для работы этих приложений:
+	SITE_ID = 1
+
+3. (setting.py) В MIDDLEWARE добавить строку:
+	'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'
+
+4. Применить миграции.
+
+5. (urls.py) Добавить в импорт django.urls: include
+   добавить в urlpatterns строку: path('pages/', include('django.contrib.flatpages.urls'))
+
+6. В директории, там где manage.py создать директорию: tamplates, а в ней flatpages, и в ней создать файл default.html
+
+7. (setting.py) import os. В TAMPLATES в 'DIRS': [] добавить os.path.join(BASE_DIR, 'tamplates').
+
+8. Директория static с index.html и стилями.
+
+9. (setting.py) Добавить строку для static:
+	STATICFILES_DIRS = [ BASE_DIR / 'static' ]
+
+10. Из index.html скопировать код в default.html.
+	Для подгрузки стилей:
+	{% load static %}
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+
+_____________________________________________________________________________
+
+Подготовка HTML шаблонов
+
+1. (admin.py) Зарегистрировать модели from .models import *
+	admin.site.register(class name)
+
+2. (views.py) Использовать дженерик ListView
+	from django.views.generic import ListView
+
+3. (urls.py) Создать файл в директории там где models.py
+	from django.urls import path
+	from .views import *
+	и создать пути до класса ListView из views.py
+
+4. (urls.py - главный) автоматически включал все наши адреса из приложения и добавлял к нему префикс
+	path('addres/', include('name_appp.urls'))
+
+5. В директории tamplates создать html файл страницы с данными из ListView на которую в админке будет указана ссылка:
+	{% extends 'flatpages/default.html' %}
+
+	{% block title %}
+	{% endblock title %}
+
+	{% block content %}
+	{{ flatpage.content }}
+	{% endblock content %}
+
+6. (views.py) Добавить DetailView
+
+7. (urls.py) Добавить путь DetailView
+
+8. В директории templates создать html файл с данными из DetailView
+
+_____________________________________________________________________________________
+
+Дженерики
+
+1. Создаем фильтр для шаблонов. 
+	В директории приложения создать папку templatetags и в ней создать файл custom_filters.py
+
+
+
+
+____________________________________________________________________________________
+
+Фильтрация и пагинация
+
+1. (views.py) Добавить стоку указывающую количество записей на странице
+
+2. Добавить пагинацию в html
+
+3. Устанавливаем django-filter
+
+4. Добавляем в INSTALLED_APPS новое приложение django_filters
+
+5. Создаем файл filters.py в корневой директории, там где models.py, и создаем в нем класс с фильтрами
+
+6. (views.py) созданный класс используем в представлении
+
+7. В html шаблоне создаем форму сгенерированную django-filter -ом
+
+8. Для работы фильтров с пагинатором создаем файл custom_tags.py в templatetags
+
+_________________________________________________________________________________
+
+Создание собственной формы
+
+1. Создаем forms.py в корневой директории каталога, там где models.py:
+	с помощью него сгенерируем html форму
+
+2. (views.py) Создать функцию для вывода формы. Ссылается на html шаблон
+
+3. (urls.py) - тот который в директории приложения: добавить путь на функцию
+
+
+________________________________________________________________________________
+
+Валидация данных в формах
+
+1. (forms.py) Функция с вызовом ошибки ValidationError
+
+
+________________________________________________________________________________
+
+Страницы с формами
+
+1. Добавляем html шаблон в templates
+
+2. (views.py) Добавляем класс для представления с ссылкой на html шаблон
+
+3. (urls.py) Зарегистрировать новое представоение
+
+4. (models.py) Добавить функцию get_absolute_url с функцией revers для определения страницы после обновления формы
+
+
+
+
+
+
+______________________________________________
+DJANGO COMMANDS
+
+Команда, создающая новый проект - 
+django-admin startproject <имя проекта>
+
+Команда для запуска сервера -
+django-admin runserver
+
+Команда создания приложения -
+python manage.py startapp myapp
+
+Команда — создать администратора -
+python manage.py createsuperuser
+
+Команда для сброса пароля - 
+python manage.py changepassword <имя пользователя>
+
+_________________________________________
+Команды для работы с БД
+
+Создание миграций -
+python manage.py makemigrations [<имя приложения>]
+
+Применить созданные миграции -
+python manage.py migrate
+
+Показать все изменения вносимые в базу данных -
+python manage.py showmigrations
+
+Выгрузить все записи из БД в JSON-файл -
+python manage.py dumpdata --format=json > mydata.json
+
+Выгрузить все записи из БД в XML-файл -
+python manage.py dumpdata --format=xml > mydata.xml
+python manage.py dumpdata --format=xml sample_app > sampledata.xml
+
+Загрузить данные - 
+python manage.py loaddata mydata.json
+
+Полная очистка базы данных -
+python manage.py flush 
+
+
+
